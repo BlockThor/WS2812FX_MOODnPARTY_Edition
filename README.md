@@ -1,4 +1,4 @@
-![WS2812FX library](https://raw.githubusercontent.com/kitesurfer1404/WS2812FX/master/WS2812FX_logo.png)
+<p align="center"> <img src="https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/blob/main/WS2812FX_MnP_logo.png" align="center" width="500"/> </p>
 
 # WS2812FX MOOD'n'PARTY - Updated, Upgraded, and Remastered
 
