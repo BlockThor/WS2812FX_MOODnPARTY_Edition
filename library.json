@@ -1,0 +1,20 @@
+{
+  "name": "WS2812FX MnP Edition",
+  "description": "WS2812 FX Library, Moon&Party Edition",
+  "keywords": "ws2812, neopixel, arduino, esp8266, mood, moodlamp, party",
+  "authors": {
+    "name": "Vasyl Yudin",
+    "url": "https://github.com/blockthor/WS2812FX_MnP_Edition"
+  },
+  "version": "0.1.0",
+  "frameworks": "arduino",
+  "platforms": "*",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blockthor/WS2812FX_MnP_Edition.git"
+  },
+  "dependencies": {
+    "adafruit/Adafruit NeoPixel": ">=1.1.7"
+  },
+  "headers": "WS2812FX_MnP_edition.h"
+}
