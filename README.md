@@ -6,17 +6,34 @@ WS2812FX MOOD'n'PARTY is a modified version of the WS2812FX library, enhanced fo
 
 ## Features
 
-- All effects now look good with the default speed set to 1000.
-- Many effects now have three sub-modes: SingleColor (if the second color is the same as the background color), DuoColor (default), and RainbowColor (if the first color is the same as the background color).
+- All effects now look good with the default speed set to 1000 (one move per second, or 60 bpm).
+- Many effects now have three sub-modes: **MonoColor** (if the second color is the same as the background color), **DuoColor** (default), and **RainbowColor** (if the first color is the same as the background color).
 - Non-symmetrical effects can be Reversed.
-- Many effects utilize SIZE_OPTION and FADE_RATE.
+- Many effects utilize `SIZE_OPTION` and `FADE_RATE`.
 
-## Download and Install
-
-1. Install the [Adafruit NeoPixel library](https://github.com/adafruit/Adafruit_NeoPixel) (v1.1.7 or newer).
-2. Download this repository.
-3. Extract the contents into your Arduino libraries directory.
-4. Open the Arduino IDE.
+### Example
+Mode **Static**: 
+- **MonoMode**: Filled with solid color - classic static mode.
+- **DuoMode**: 
+  * `DIRECT`: 
+    + `SIZE_SMALL` : filled with gradient from Main Color to Second Color;
+    + `SIZE_MEDIUM` : filled with 2 sections of gradient;
+    + `SIZE_LARGE` : filled with 4 sections of gradient;
+    + `SIZE_XLARGE` : filled with 8 sections of gradient;
+  * `REVERSE` : 
+    + `SIZE_SMALL` : filled with gradient from Second Color to Main Color;
+    + `SIZE_MEDIUM` : filled with 2 sections of gradient;
+    + `SIZE_LARGE` : filled with 4 sections of gradient;
+    + `SIZE_XLARGE` : filled with 8 sections of gradient;
+- **RGBMode**: 
+  * `DIRECT`: 
+    + `SIZE_SMALL` : filled with rainbow gradient from Red to Violet;
+    + `SIZE_MEDIUM` : filled with 2 sections of gradient;
+    + ...
+  * `REVERSE` : 
+    + `SIZE_SMALL` : filled with gradient from Violet ro Red;
+    + `SIZE_MEDIUM` : filled with 2 sections of gradient;
+    + ...
 
 ## New Effects
 
@@ -55,3 +72,10 @@ WS2812FX MOOD'n'PARTY is a modified version of the WS2812FX library, enhanced fo
 
 - [ ] Change DuoMode to PaletteMode (Maybe, not sure yet).
 - [ ] Add marks (categories) for effects to indicate if they can be used for Mono/Duo/Rainbow/Special modes, Reversible/Element size/Fade rate.
+
+## Download and Install
+
+1. Install the [Adafruit NeoPixel library](https://github.com/adafruit/Adafruit_NeoPixel) (v1.1.7 or newer).
+2. Download this repository.
+3. Extract the contents into your Arduino libraries directory.
+4. Open the Arduino IDE.
