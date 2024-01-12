@@ -1,3 +1,11 @@
+
+[![Stargazers][stars-shield]][stars-url]
+[![Forks][forks-shield]][forks-url]
+[![Contributors][contributors-shield]][contributors-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![Instagram][instagram-shield]][instagram-url]
+
 <p align="center"> <img src="https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/blob/main/WS2812FX_MnP_logo.png" align="center" width="500"/> </p>
 
 # WS2812FX MOOD'n'PARTY - Updated, Upgraded, and Remastered
@@ -79,3 +87,19 @@ Mode **Static**:
 2. Download this repository.
 3. Extract the contents into your Arduino libraries directory.
 4. Open the Arduino IDE.
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[stars-shield]: https://img.shields.io/github/stars/BlockThor/WS2812FX_MOODnPARTY_Edition?logo=github&style=flat&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
+[stars-url]: https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/stargazers
+[forks-shield]: https://img.shields.io/github/forks/BlockThor/WS2812FX_MOODnPARTY_Edition?style=flat&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
+[forks-url]: https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/network/members
+[contributors-shield]: https://img.shields.io/github/contributors/BlockThor/WS2812FX_MOODnPARTY_Edition?style=flat&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
+[contributors-url]: https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/graphs/contributors
+[issues-shield]: https://img.shields.io/github/issues/BlockThor/WS2812FX_MOODnPARTY_Edition?style=flat&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
+[issues-url]: https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/issues
+[license-shield]: https://img.shields.io/github/license/BlockThor/WS2812FX_MOODnPARTY_Edition?style=flat&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
+[license-url]: https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/blob/master/LICENSE
+[instagram-shield]: https://img.shields.io/badge/-Instagram-black?style=flat&logo=Instagram&logoColor=%23E6EDF3&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
+[instagram-url]: https://instagram.com/vasylyudin/
