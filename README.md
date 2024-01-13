@@ -10,14 +10,14 @@
 
 # WS2812FX MOOD'n'PARTY - Updated, Upgraded, and Remastered
 
-WS2812FX MOOD'n'PARTY is a modified version of the WS2812FX library, enhanced for use with the "**MOOD'n'PARTY Lights**" single-page web interface.
+WS2812FX MOOD'n'PARTY is a modified version of the WS2812FX library, enhanced for use with the "**[MOOD'n'PARTY Lights](https://github.com/BlockThor/MOODnPARTY_LIGHTS_WebInterface)**" single-page web interface.
 
 ## Features
 
-- All effects now look good with the default speed set to 1000 (one move per second, or 60 bpm).
 - Many effects now have three sub-modes: **MonoColor** (if the second color is the same as the background color), **DuoColor** (default), and **RainbowColor** (if the first color is the same as the background color).
 - Non-symmetrical effects can be Reversed.
 - Many effects utilize `SIZE_OPTION` and `FADE_RATE`.
+- All effects now look good with the default speed set to 1000 (one move per second, or 60 bpm).
 
 ### Example
 Mode **Static**: 
