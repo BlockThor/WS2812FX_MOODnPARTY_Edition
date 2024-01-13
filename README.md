@@ -3,6 +3,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
+[![Code][code-shileld]][code-url]
 [![MIT License][license-shield]][license-url]
 [![Instagram][instagram-shield]][instagram-url]
 
@@ -99,6 +100,8 @@ Mode **Static**:
 [contributors-url]: https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/graphs/contributors
 [issues-shield]: https://img.shields.io/github/issues/BlockThor/WS2812FX_MOODnPARTY_Edition?style=flat&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
 [issues-url]: https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/issues
+[code-shileld]: https://img.shields.io/github/languages/code-size/BlockThor/MOODnPARTY_LIGHTS_WebInterface?style=flat&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
+[code-url]: https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition
 [license-shield]: https://img.shields.io/github/license/BlockThor/WS2812FX_MOODnPARTY_Edition?style=flat&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
 [license-url]: https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/blob/master/LICENSE
 [instagram-shield]: https://img.shields.io/badge/-Instagram-black?style=flat&logo=Instagram&logoColor=%23E6EDF3&labelColor=rgba(0%2C0%2C0%2C0.1)&color=rgba(0%2C0%2C0%2C0.1)
