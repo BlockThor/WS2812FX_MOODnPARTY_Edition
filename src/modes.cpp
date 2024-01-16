@@ -79,11 +79,7 @@
 // Plain static light.   Static Mood
 uint16_t WS2812FX::mode_static(void) {
   SETUP HUE_START = random8();
-  
-  if(IS_GAMMA) Serial.println("GAMMA!"); else Serial.println("NOT GAMMA!"); 
-  CLEAR_GAMMA;
-  if(IS_GAMMA) Serial.println("GAMMA!"); else Serial.println("NOT GAMMA!"); 
-  
+   
   uint8_t size = 1 << SIZE_OPTION;
   float colorIndexIncr =  256 / (_seg_len) * size;
   
@@ -1251,7 +1247,6 @@ uint16_t WS2812FX::mode_ocean(void){
   const double SpeedOfWaves = 0.05;
   const double BreathOfWaves = 0.009;
   float phase = CALL * (BreathOfWaves + _num_segment*0.0001);
-  // Serial.print(CALL, HEX);  Serial.print(" ");  Serial.println(phase);
   float flow = (sin(phase)+0.9)/2;
 
   for (uint16_t i = 0; i <= _seg_len; i++) {
@@ -1409,7 +1404,6 @@ uint16_t WS2812FX::mode_meteor(void) {
   
   if(bri == 0){
     STEP = (STEP + 1);
-    Serial.println(random8(3)*FADE_RATE*FADE_RATE+108);
     for(uint16_t i=FIRST; i <= LAST; i++) {
       uint8_t fade = min(255, random8(96)*FADE_RATE+96);
       if(getPixelColor(i)!=BG_COLOR) fade_out_pixel(i, BG_COLOR, fade);
