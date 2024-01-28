@@ -116,14 +116,15 @@
 #define FX_MODE_SPLIT           		  	68 // SPECIAL 
 #define FX_MODE_VU_METER_PEAK   		  	69 // SPECIAL 
 #define FX_MODE_FLYING_SPIRIT    		  	70 // SPECIAL 
-#define FX_MODE_CUSTOM_0                71 // custom modes need to go at the end
-#define FX_MODE_CUSTOM_1                72 
-#define FX_MODE_CUSTOM_2                73 
-#define FX_MODE_CUSTOM_3                74
-#define FX_MODE_CUSTOM_4                75
-#define FX_MODE_CUSTOM_5                76
-#define FX_MODE_CUSTOM_6                77
-#define FX_MODE_CUSTOM_7                78
+#define FX_MODE_PORTAL          		  	71 // SPECIAL 
+#define FX_MODE_CUSTOM_0                72 // custom modes need to go at the end
+#define FX_MODE_CUSTOM_1                73 
+#define FX_MODE_CUSTOM_2                74 
+#define FX_MODE_CUSTOM_3                75
+#define FX_MODE_CUSTOM_4                76
+#define FX_MODE_CUSTOM_5                77
+#define FX_MODE_CUSTOM_6                78
+#define FX_MODE_CUSTOM_7                79
 
 
 // OLD NAMES 
@@ -229,15 +230,15 @@ const char name_67[] PROGMEM = "Colorfall";
 const char name_68[] PROGMEM = "Split";
 const char name_69[] PROGMEM = "VU Meter Peak";
 const char name_70[] PROGMEM = "Fliyng Spirit";
-const char name_71[] PROGMEM = "Custom 0"; // custom modes need to go at the en
-const char name_72[] PROGMEM = "Custom 1";
-const char name_73[] PROGMEM = "Custom 2";
-const char name_74[] PROGMEM = "Custom 3";
-const char name_75[] PROGMEM = "Custom 4";
-const char name_76[] PROGMEM = "Custom 5";
-const char name_77[] PROGMEM = "Custom 6";
-const char name_78[] PROGMEM = "Custom 7";
-// const char name_79[] PROGMEM = 
+const char name_71[] PROGMEM = "Portal";
+const char name_72[] PROGMEM = "Custom 0"; // custom modes need to go at the en
+const char name_73[] PROGMEM = "Custom 1";
+const char name_74[] PROGMEM = "Custom 2";
+const char name_75[] PROGMEM = "Custom 3";
+const char name_76[] PROGMEM = "Custom 4";
+const char name_77[] PROGMEM = "Custom 5";
+const char name_78[] PROGMEM = "Custom 6";
+const char name_79[] PROGMEM = "Custom 7";
 // const char name_80[] PROGMEM = 
 // const char name_81[] PROGMEM = 
 // const char name_82[] PROGMEM = 
@@ -322,22 +323,16 @@ __attribute__ ((unused)) static mode _modes[] = {
   { FSH(name_68), &WS2812FX::mode_split },
   { FSH(name_69), &WS2812FX::mode_vu_meter_peak },
   { FSH(name_70), &WS2812FX::mode_flying_split },
-  { FSH(name_71), &WS2812FX::mode_custom_0 },
-  { FSH(name_72), &WS2812FX::mode_custom_1 },
-  { FSH(name_73), &WS2812FX::mode_custom_2 },
-  { FSH(name_74), &WS2812FX::mode_custom_3 },
-  { FSH(name_75), &WS2812FX::mode_custom_4 },
-  { FSH(name_76), &WS2812FX::mode_custom_5 },
-  { FSH(name_77), &WS2812FX::mode_custom_6 },
-  { FSH(name_78), &WS2812FX::mode_custom_7 } 
-  // { FSH(name_79), &WS2812FX::
-  // { FSH(name_83), &WS2812FX::
-  // { FSH(name_84), &WS2812FX::
-  // { FSH(name_85), &WS2812FX::
-  // { FSH(name_86), &WS2812FX::
-  // { FSH(name_87), &WS2812FX::
-  // { FSH(name_88), &WS2812FX::
-  // { FSH(name_82), &WS2812FX::
+  { FSH(name_71), &WS2812FX::mode_portal },
+  { FSH(name_72), &WS2812FX::mode_custom_0 },
+  { FSH(name_73), &WS2812FX::mode_custom_1 },
+  { FSH(name_74), &WS2812FX::mode_custom_2 },
+  { FSH(name_75), &WS2812FX::mode_custom_3 },
+  { FSH(name_76), &WS2812FX::mode_custom_4 },
+  { FSH(name_77), &WS2812FX::mode_custom_5 },
+  { FSH(name_78), &WS2812FX::mode_custom_6 },
+  { FSH(name_79), &WS2812FX::mode_custom_7 }
+  // { FSH(name_80), &WS2812FX:: 
 };
 #endif
 

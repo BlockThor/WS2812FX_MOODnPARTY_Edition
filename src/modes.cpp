@@ -78,8 +78,8 @@
 
 // Plain static light.   Static Mood
 uint16_t WS2812FX::mode_static(void) {
-  SETUP HUE_START = random8();
-   
+  SETUP HUE_START = random8(); 
+  
   uint8_t size = 1 << SIZE_OPTION;
   float colorIndexIncr =  256 / (_seg_len) * size;
   
@@ -1550,4 +1550,41 @@ uint16_t WS2812FX::mode_vu_meter_peak(void) {
   STEP = (STEP + 1) & 0xFF;
   SET_CYCLE;
   return (_seg->speed / 64);
+}
+
+// - = = S P L I T = = -
+uint16_t WS2812FX::mode_portal(void){
+  uint32_t color1, color2;
+  const uint8_t split = _seg_len/2;
+  
+  if (IS_RGBMODE) {
+    float phase = CALL * (0.02 + _num_segment*0.001);
+    float hue = ((sin(phase*1.0) + sin(phase*2.0) + sin(phase*4.5))+3)*0x3F;
+    color1  = color_wheel(hue);
+    color2 = color1;// color2 = color_wheel(0xFFFFFF-hue); 
+  } else if (IS_MONOMODE) {
+    color1 = MAIN_COLOR;  
+    color2 = color1;
+  } else { // IS_DUOMODE
+    if(IS_REVERSE) {
+      color1 = SECOND_COLOR;
+      color2 = MAIN_COLOR;
+    } else {
+      color1 = MAIN_COLOR;
+      color2 = SECOND_COLOR;
+    }
+  }
+  
+  for(uint16_t i=FIRST; i <= LAST; i++) { // random fade some pixel
+    // uint8_t fade = min(255, random8(96)*FADE_RATE+96);
+    uint8_t fade = min(255, random8(_seg_len*3/2)*FADE_RATE+96);
+    if(getPixelColor(i)!=BG_COLOR) fade_out_pixel(i, BG_COLOR, fade);
+  }
+  
+  copyPixels(FIRST + 1, FIRST, split);
+  copyPixels(FIRST+split, FIRST+split + 1, split);
+  setPixelColor(FIRST, color1);
+  setPixelColor(LAST, color2);
+  
+  return _seg->speed / 24;
 }

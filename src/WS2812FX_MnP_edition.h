@@ -6,8 +6,9 @@
   2023-2024
   www.ledvine.com
   
-  WS2812FX_MnP_edition.h - Library for WS2812 LED effects.
-  
+  0.1.0 - first release on GitHub
+  0.1.1 - add mode: Portal (FX_MODE_PORTAL)
+ 
   NOTES
     * Uses the Adafruit NeoPixel library. Get it here:
       https://github.com/adafruit/Adafruit_NeoPixel
@@ -47,7 +48,7 @@
 #define WS2812FX_MNP_EDITION_h
 
 #define WS2812FX_MNP_EDITION_VERSION_VAL(major, minor, patch) ((major << 16) | (minor << 8) | (patch))
-#define WS2812FX_MNP_EDITION_VERSION WS2812FX_MNP_EDITION_VERSION_VAL(0, 1, 0)
+#define WS2812FX_MNP_EDITION_VERSION WS2812FX_MNP_EDITION_VERSION_VAL(0, 1, 1)
 
 #define FSH(x) (__FlashStringHelper*)(x)
 #define MAX_MILLIS (0UL - 1UL) /* ULONG_MAX */
@@ -426,6 +427,7 @@ class WS2812FX : public Adafruit_NeoPixel {
       mode_colorfall(void),
       mode_split(void),
       mode_flying_split(void),
+      mode_portal(void),
       mode_custom_0(void),
       mode_custom_1(void),
       mode_custom_2(void),
