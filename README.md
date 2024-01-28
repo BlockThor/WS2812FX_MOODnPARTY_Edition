@@ -68,6 +68,7 @@ Mode **Static**:
 - **Colorfall**: Waves of colors falling down like a waterfall. _Mono:no; Due:no; RGB:ok; Reverse:ok;_
 - **Split**: Same as Colorfall but split in the middle. _Mono:no; Due:no; RGB:ok; Reverse:no;_
 - **Flying Spirit**: Modification of Split with a moved core and fading out wings. _Mono:no; Due:no; RGB:ok; Reverse:no;_
+- **Portal** - Flame looking effect from outside to center. _Mono:ok; Due:ok; RGB:ok; Reverse:Yes for Due only;_
 
 ### Special Effect
 
