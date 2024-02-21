@@ -318,7 +318,7 @@ uint16_t WS2812FX::mode_twinkle_fade(void) {
     }
   }
 
-  if(random8(_seg_len/16) == 0) {
+  if(random8(240/_seg_len) == 0) {
     uint8_t size = 1 << SIZE_OPTION;
     uint16_t index = FIRST + random16(_seg_len/size + 1)*size;
     fill(color, index, size);
@@ -894,12 +894,12 @@ uint16_t WS2812FX::mode_rainbow_fireworks(void) {
   }
 
   // occasionally create a random red pixel
-  if(random8(0x0F) == 0) {
+  if(random8(600/_seg_len) == 0) {
     uint16_t index = FIRST + 6 + random16(max(1, _seg_len - 12));
     setRawPixelColor(index, RED); // set the raw pixel color (ignore global brightness)
     SET_CYCLE;
   }
-  return(_seg->speed / _seg_len*2);
+  return(_seg->speed / 32);
 }
 
 // fade between 3 colors
@@ -1088,7 +1088,7 @@ uint16_t WS2812FX::mode_popcorn(void) {
       }
     }
   }
-  return (_seg->speed / _seg_len/2);
+  return (_seg->speed / 128);
 }
 
 /*
@@ -1188,7 +1188,7 @@ uint16_t WS2812FX::mode_fire2012(void){
       setPixelColor(FIRST + j, color);
     }
   }
-  return (_seg->speed / _seg_len  * 2);
+  return (_seg->speed / 32);
 }
 
 // - = = Firefly = = -
@@ -1199,13 +1199,12 @@ uint16_t WS2812FX::mode_firefly(void){
   float pX = (sin(phase * 1.750) + sin(phase * 1.130)) * _seg_len / 5.0 +_seg_len / 2;
   // float pY = (sin(phase * 1.130) + 1.0) * _seg_len / 4; // fly n die
   // float pY = sin(phase * 1.130) * _seg_len / 4.2 +_seg_len / 4;
-  float pY = (sin(phase * 1.150) + sin(sin(phase * 1.150)*2.5))/2 * _seg_len / 4.2;
+  float pY = (sin(phase * 1.150) + sin(sin(phase * 1.150)*2.5))*(0.026*_seg_len+0.6);
 	
   for (uint16_t i = 0; i <= _seg_len; i++) {
     float distX = float(i) - pX;
     float distY = pY;
-    float dist = (distX * distX + distY * distY);
-    // int b = int( round(7 - sin(phase * 1.770) - sin(phase * 0.5) * 2 - dist * 3) / 7.0 * 255);
+    float dist = (distX * distX + distY * distY)*max(1.0,(25-0.2*_seg_len));
     int b = 255 - max(0, min(255, int(dist)));
     // if(b>120) b += (sin(phase*4)+sin(phase*4.5))*20;
     // b = max(0, min(255, b));
@@ -1299,7 +1298,7 @@ uint16_t WS2812FX::mode_orbita(void){
 
 // - = = M A C H I N A = = -
 uint16_t WS2812FX::mode_machina(void) {
-  uint8_t size = 8 << SIZE_OPTION;
+  uint8_t size = (_seg_len/4) << SIZE_OPTION;
   static Machina mach[3];
   SETUP for (uint8_t i = 0; i < 3; i++) {
     mach[i].dest = random8(_seg_len) + 0xFFF;
@@ -1374,7 +1373,7 @@ uint16_t WS2812FX::mode_disco(void) {
   }
   
 	if (random8(8) == 0) { // make it shine
-    uint8_t size = 8 << SIZE_OPTION;
+    uint8_t size = (_seg_len/4) << SIZE_OPTION;
     size -= random8(size/2);
     uint8_t pos = random8(_seg_len);
     for (uint8_t j = 0; j < size; j++) {
