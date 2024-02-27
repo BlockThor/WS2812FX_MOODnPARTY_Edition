@@ -36,13 +36,15 @@ Mode **Static**:
     + `SIZE_XLARGE` : filled with 8 sections of gradient;
 - **RGBMode**: 
   * `DIRECT`: 
-    + `SIZE_SMALL` : filled with rainbow gradient from Red to Violet;
+    + `SIZE_SMALL` : filled with rainbow gradient;
     + `SIZE_MEDIUM` : filled with 2 sections of gradient;
-    + ...
+    + --//--
   * `REVERSE` : 
-    + `SIZE_SMALL` : filled with gradient from Violet ro Red;
+    + `SIZE_SMALL` : filled with rainbow gradient;
     + `SIZE_MEDIUM` : filled with 2 sections of gradient;
-    + ...
+    + --//--
+
+<p align="center"> <img src="https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/blob/main/img/Static_Mono_Duo_RGB.jpg" align="center" width="600"/> </p>
 
 ## New Effects
 
