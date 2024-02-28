@@ -44,7 +44,8 @@ Mode **Static**:
     + `SIZE_MEDIUM` : filled with 2 sections of gradient;
     + --//--
 
-<p align="center"> <img src="https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/blob/main/img/Static_Mono_Duo_RGB.jpg" align="center" width="600"/> </p>
+<p align="center"> <img src="https://github.com/BlockThor/WS2812FX_MOODnPARTY_Edition/blob/main/img/Static_Mono_Duo_RGB.jpg" align="center" width="600" alt="Static effect for: Mono mode, Due mode, RGB mode" title="Static effect for: Mono mode, Due mode, RGB mode" /> </p>
+<p align="center"> <small>Static effect for: Mono mode // Due mode // RGB mode</small> </p>
 
 ## New Effects
 
