@@ -167,7 +167,7 @@ uint16_t WS2812FX::color_wipe(uint32_t color1, uint32_t color2, bool rev) {
 /*
  * scan function - runs a block of pixels back and forth.
  */
-uint16_t WS2812FX::scan(uint32_t color1, uint32_t color2, bool dual) {
+/* uint16_t WS2812FX::scan(uint32_t color1, uint32_t color2, bool dual) {
   int8_t dir = _seg_rt->aux_param ? -1 : 1;
   uint8_t size = 1 << SIZE_OPTION;
 
@@ -184,8 +184,8 @@ uint16_t WS2812FX::scan(uint32_t color1, uint32_t color2, bool dual) {
       fill(color1, _seg->start + _seg_rt->counter_mode_step, size);
 	  if(dual) fill(color1, _seg->stop - _seg_rt->counter_mode_step - size + 1, size);
 	} else { // IS_DUOMODE
-      fill(_seg_rt->aux_param ? color1 : color2, _seg->start + _seg_rt->counter_mode_step, size);
-      if(dual) fill(_seg_rt->aux_param ? color2 : color1, _seg->stop - _seg_rt->counter_mode_step - size + 1, size);
+      fill(color1, _seg->start + _seg_rt->counter_mode_step, size);
+      if(dual) fill(color2, _seg->stop - _seg_rt->counter_mode_step - size + 1, size);
 	}
 
   _seg_rt->counter_mode_step += dir;
@@ -196,7 +196,7 @@ uint16_t WS2812FX::scan(uint32_t color1, uint32_t color2, bool dual) {
   if(_seg_rt->counter_mode_step >= (uint16_t)(_seg_len - size)) _seg_rt->aux_param = 1;
 
   return (_seg->speed / (_seg_len * 2));
-}
+} */
 
 /*
  * Tricolor chase function

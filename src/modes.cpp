@@ -57,11 +57,14 @@
 #define STEP _seg_rt->counter_mode_step
 #define FIRST _seg->start
 #define LAST _seg->stop
+#define START _seg->start
+#define STOP _seg->stop
 #define AUX1 _seg_rt->aux_param
 #define AUX2 _seg_rt->aux_param2
 #define AUX3 _seg_rt->aux_param3
 
 #define HUE_START _seg_rt->aux_param3
+//  SETUP HUE_START = random8(); 
 
 // if (IS_RGBMODE) {
 // } else if (IS_MONOMODE) {
@@ -81,18 +84,18 @@ uint16_t WS2812FX::mode_static(void) {
   SETUP HUE_START = random8(); 
   
   uint8_t size = 1 << SIZE_OPTION;
-  float colorIndexIncr =  256 / (_seg_len) * size;
+  double colorIncr =  255.0 / (_seg_len-1) * size;
   
   if (IS_RGBMODE) { // RGB COLOR MODE
-	for(uint16_t i=FIRST; i <= LAST; i++) {
-	  setPixelColor(i, IS_REVERSE? color_wheel(HUE_START+colorIndexIncr*(_seg_len-1-i)) : color_wheel(HUE_START+colorIndexIncr*i));
-	}
+    for(uint16_t i=FIRST; i <= LAST; i++) {
+      setPixelColor(i, IS_REVERSE? color_wheel(HUE_START+colorIncr*(_seg_len-1-i)) : color_wheel(HUE_START+colorIncr*i));
+    }
   } else if (IS_MONOMODE) { // MONO COLOR MODE
     fill(MAIN_COLOR, FIRST, _seg_len);
-  } else { // DUO COLOR MODE  uint8_t colorIndexIncr =  256 / _seg_len;
-	for(uint16_t i=FIRST; i <= LAST; i++) {
-	  setPixelColor(i, color_blend(MAIN_COLOR, SECOND_COLOR, IS_REVERSE? (colorIndexIncr*(_seg_len-1-i)) : (colorIndexIncr*i) ));
-	}
+  } else { // DUO COLOR MODE  uint8_t colorIncr =  255 / _seg_len;
+    for(uint16_t i=FIRST; i <= LAST; i++) {
+      setPixelColor(i, color_blend(MAIN_COLOR, SECOND_COLOR, IS_REVERSE? (colorIncr*(_seg_len-1-i)) : (colorIncr*i) ));
+    }
   }
   SET_CYCLE;
   return _seg->speed/4;
@@ -100,10 +103,11 @@ uint16_t WS2812FX::mode_static(void) {
 
 // Normal blinking. 50% on/off time.
 uint16_t WS2812FX::mode_mood_click(void) { // ex mode_blink
+  SETUP HUE_START = random8();
   uint16_t speed;
   if (IS_RGBMODE) { // RGB COLOR MODE
 	// speed = blink(color_wheel((CALL << 2) & 0xFF), color_wheel(0xFF - (CALL << 2) & 0xFF), false);
-	speed = blink(color_wheel((CALL << 2) & 0xFF), color_wheel((0x80+(CALL << 2)) & 0xFF), false);
+	speed = blink(color_wheel(HUE_START+(CALL << 2) & 0xFF), color_wheel(HUE_START+(0x80+(CALL << 2)) & 0xFF), false);
   } else if (IS_MONOMODE) { // MONO COLOR MODE
 	speed = blink(MAIN_COLOR, BG_COLOR, false);
   } else { // DUO COLOR MODE
@@ -145,7 +149,8 @@ uint16_t WS2812FX::mode_breath(void) {
 
 // Turns all LEDs after each other to a random color. Then starts over with another color.
 uint16_t WS2812FX::mode_mood_train(void) {
-  uint32_t color = color_wheel(AUX1);
+  SETUP HUE_START = random8();
+  uint32_t color = color_wheel(HUE_START+AUX1);
   if(STEP < _seg_len) {
     
     if(IS_REVERSE) {
@@ -218,12 +223,50 @@ uint16_t WS2812FX::mode_mood_flow(void) { // ex mode_rainbow_cycle
 
 // Runs a block of pixels back and forth.
 uint16_t WS2812FX::mode_scan(void) {
-  return scan(MAIN_COLOR, SECOND_COLOR, false);
+  SETUP HUE_START = random8(); 
+  uint32_t color = MAIN_COLOR;
+  uint8_t size = 1 << SIZE_OPTION;
+  STEP = CALL% ((_seg_len- size) *2);
+  int16_t index = abs((int)(_seg_len- STEP- size));
+
+  fill(BG_COLOR, START, _seg_len);
+
+	if (IS_RGBMODE) {
+	  uint8_t colorIncr =  255.0/ _seg_len;
+	  color = color_wheel(HUE_START+ (CALL/4)&0xFF+ colorIncr* index);
+	} else if(IS_MONOMODE) {
+      color = MAIN_COLOR;
+	} else {
+    if (STEP > (_seg_len- size)) color = SECOND_COLOR;
+  }
+  fill(color, START+ index, size);
+  
+  return (_seg->speed/ _seg_len);
 }
 
 // Runs two blocks of pixels back and forth in opposite directions.
 uint16_t WS2812FX::mode_dual_scan(void) {
-  return scan(MAIN_COLOR, SECOND_COLOR, true);
+  SETUP HUE_START = random8(); 
+  uint32_t color1 = MAIN_COLOR;
+  uint32_t color2 = SECOND_COLOR;
+  uint8_t size = 1 << SIZE_OPTION;
+  STEP = CALL % ((_seg_len - size) *2);
+  int16_t index = abs((int)(_seg_len- STEP- size));
+
+  fill(BG_COLOR, _seg->start, _seg_len);
+  
+	if (IS_RGBMODE) {
+	  uint8_t colorIncr =  255.0 / _seg_len;
+    uint8_t hue = HUE_START+ colorIncr* index/2;// (CALL/4)&0xFF+
+	  color1 = color_wheel((CALL>>4)+hue);
+	  color2 = color_wheel((CALL>>4)+hue+128);
+	} else if(IS_MONOMODE) {
+      color2 = color1;
+	} 
+  fill(color1, START+ index, size);
+  fill(color2, STOP- index- size+ 1, size);
+  
+  return (_seg->speed/ _seg_len);
 }
 
 // Fades the LEDs between two colors
@@ -252,9 +295,10 @@ uint16_t WS2812FX::mode_mood_swing(void) { // ex mode_fade
 
 // Theatre-style crawling lights. Inspired by the Adafruit examples.
 uint16_t WS2812FX::mode_theater_chase(void) {
+  SETUP HUE_START = random8();   
   if (IS_RGBMODE) {
   AUX1 = (AUX1 + 1) & 0xFF;
-  return tricolor_chase(color_wheel(AUX1), BG_COLOR, BG_COLOR);
+  return tricolor_chase(color_wheel(HUE_START+AUX1), BG_COLOR, BG_COLOR);
   } else if (IS_MONOMODE) {
     return tricolor_chase(MAIN_COLOR, BG_COLOR, BG_COLOR);
   } else { // IS_DUOMODE
@@ -264,14 +308,15 @@ uint16_t WS2812FX::mode_theater_chase(void) {
 
 // Running lights effect with smooth sine transition.
 uint16_t WS2812FX::mode_waves(void) {
+  SETUP HUE_START = random8();   
 	uint32_t color;
   uint8_t size = 1 << SIZE_OPTION;
-  uint8_t sineIncr = max(1, (256 / _seg_len) / size * 4);
+  uint8_t sineIncr = max(1, int((256.0 / _seg_len) / size * 4));
   for(uint16_t i=0; i < _seg_len; i++) {
     int lum = (int)sine8(((i + STEP) * sineIncr));
     int bri = (int)sine8(((i + STEP+64) * sineIncr));
     if (IS_RGBMODE) {
-      color = color_blend(color_wheel(STEP), color_wheel(STEP+42), lum);
+      color = color_blend(color_wheel(HUE_START+STEP), color_wheel(HUE_START+STEP+42), lum);
     } else if (IS_MONOMODE) {
       color = color_blend(MAIN_COLOR, BG_COLOR, lum);
     } else { // IS_DUOMODE
@@ -318,7 +363,7 @@ uint16_t WS2812FX::mode_twinkle_fade(void) {
     }
   }
 
-  if(random8(240/_seg_len) == 0) {
+  if(random8(120/_seg_len) == 0) {
     uint8_t size = 1 << SIZE_OPTION;
     uint16_t index = FIRST + random16(_seg_len/size + 1)*size;
     fill(color, index, size);
@@ -597,6 +642,7 @@ uint16_t WS2812FX::mode_tricolor_chase(void) {
 *  Upgrade by Vasyl Yudin: increase time for LED off & LED max
 */
 uint16_t WS2812FX::mode_xmas_twinkle(void) { // ex mode_twinkleFOX
+  SETUP HUE_START = random16(); 
   uint16_t mySeed = 0; // reset the random number generator seed
 
   // Get and translate the segment's size option
@@ -605,11 +651,12 @@ uint16_t WS2812FX::mode_xmas_twinkle(void) { // ex mode_twinkleFOX
   uint32_t blendedColor;
 
   for (uint16_t i = FIRST; i <= LAST; i+=size) {
+    
     // Use Mark Kriegsman's clever idea of using pseudo-random numbers to determine
     // each LED's initial and increment blend values
-    mySeed = (mySeed * 2053) + 13850; // a random, but deterministic, number
+    mySeed = (mySeed * 2053) + HUE_START; // a random, but deterministic, number
     uint16_t initValue = (mySeed + (mySeed >> 8)) & 0xff; // the LED's initial blend index (0-255)
-    mySeed = (mySeed * 2053) + 13850; // another random, but deterministic, number
+    mySeed = (mySeed * 2053) + HUE_START; // another random, but deterministic, number
     uint16_t incrValue = (((mySeed + (mySeed >> 8)) & 0x03) *2) + 1; // blend index increment (1,3,5,7)
 
     // We're going to use a sine function to blend colors, instead of Mark's triangle
@@ -651,12 +698,12 @@ uint16_t WS2812FX::mode_xmas_glitter(void) {
   for (uint16_t i = FIRST; i <= LAST; i+=size) {
     mySeed = (mySeed * 2053) + HUE_START; // a random, but deterministic, number
     uint8_t initValue = (mySeed + (mySeed >> 8)) & 0xff; // the LED's initial blend index (0-255)
-    mySeed = (mySeed * 2053) + 13850; // another random, but deterministic, number
+    mySeed = (mySeed * 2053) + HUE_START; // another random, but deterministic, number
     uint8_t incrValue = ((mySeed + (mySeed >> 8)) & 0x03) + 1; // blend index increment (1,3,5,7)
 
     uint8_t blendIndex = (initValue + (CALL * incrValue)) & 0xff; // 0-255
     // Index into the built-in Adafruit_NeoPixel sine table to lookup the blend amount
-    uint8_t blendAmt = Adafruit_NeoPixel::sine8(blendIndex)/2;
+    uint8_t blendAmt = sine8(blendIndex)/2;
 
     fill(color_wheel(initValue+blendAmt), i, size);
   }
@@ -759,12 +806,14 @@ uint16_t WS2812FX::mode_icu(void) {
 }
 
 // Dual Larson effect
-uint16_t WS2812FX::mode_dual_larson(void) {
+uint16_t WS2812FX::mode_dual_larson(void) 
+{
+  SETUP HUE_START = random8();
   uint32_t color1, color2;
   uint8_t colorIndexIncr =  256 / _seg_len;
 	if (IS_RGBMODE) {
-		color1 = color_wheel(colorIndexIncr * (IS_REVERSE? (FIRST + STEP):(LAST  - STEP)));
-		color2 = color_wheel(colorIndexIncr * (IS_REVERSE? (LAST  - STEP):(FIRST + STEP)));
+		color1 = color_wheel(HUE_START+ CALL/4+ colorIndexIncr * (IS_REVERSE? (FIRST + STEP):(LAST  - STEP)));
+		color2 = color_wheel(HUE_START+ CALL/4+ colorIndexIncr * (IS_REVERSE? (LAST  - STEP):(FIRST + STEP)));
 	} else if (IS_MONOMODE) {
 		color1 = MAIN_COLOR;
 		color2 = MAIN_COLOR;
@@ -777,8 +826,6 @@ uint16_t WS2812FX::mode_dual_larson(void) {
 
   STEP += AUX1 ? -1 : 1; // update the LED index
 
-  // setPixelColor(FIRST + AUX3, MAIN_COLOR);
-  // setPixelColor(LAST  - AUX3, SECOND_COLOR ? SECOND_COLOR : MAIN_COLOR);
   setPixelColor(FIRST + STEP, color1);
   setPixelColor(LAST  - STEP, color2);
 
@@ -1202,10 +1249,10 @@ uint16_t WS2812FX::mode_firefly(void){
   float pY = (sin(phase * 1.150) + sin(sin(phase * 1.150)*2.5))*(0.026*_seg_len+0.6);
 	
   for (uint16_t i = 0; i <= _seg_len; i++) {
-    float distX = float(i) - pX;
-    float distY = pY;
-    float dist = (distX * distX + distY * distY)*max(1.0,(25-0.2*_seg_len));
-    int b = 255 - max(0, min(255, int(dist)));
+    // float distX = float(i) - pX;
+    // float distY = pY;
+    int dist = ((float(i) - pX) * (float(i) - pX) + pY * pY)*max(1.0,(25-0.2*_seg_len));
+    int b = 255 - max(0, min(255, dist));
     // if(b>120) b += (sin(phase*4)+sin(phase*4.5))*20;
     // b = max(0, min(255, b));
     if (IS_RGBMODE) {
@@ -1265,22 +1312,23 @@ uint16_t WS2812FX::mode_ocean(void){
 
 // - = = O R B I T A = = -
 uint16_t WS2812FX::mode_orbita(void){
+  SETUP HUE_START = random16(); 
 	const double coefR = 0.033;
 	const double coefG = 0.032;
 	const double coefB = 0.031;
 	const double coefS = 0.001;
 
-	int r = sin(CALL*coefR)*(double)(_seg_len/2-1)+_seg_len/2;
-	int g = sin(CALL*coefG)*(double)(_seg_len/2-1)+_seg_len/2;
-	int b = sin(CALL*coefB)*(double)(_seg_len/2-1)+_seg_len/2;
+	int r = sin(CALL*coefR)*(double)(_seg_len/2)+_seg_len/2;
+	int g = sin(CALL*coefG)*(double)(_seg_len/2)+_seg_len/2;
+	int b = sin(CALL*coefB)*(double)(_seg_len/2)+_seg_len/2;
 	int s = (sin(CALL*coefS)+1)*32;
 
   fade_out(BG_COLOR, 36 * FADE_RATE);
 
 	if (IS_RGBMODE) {
-		setPixelColor(r, getPixelColor(r) | colorHSV(CALL + HUE_RED));
-		setPixelColor(g, getPixelColor(g) | colorHSV(CALL + HUE_GREEN));
-		setPixelColor(b, getPixelColor(b) | colorHSV(CALL + HUE_BLUE));
+		setPixelColor(r, getPixelColor(r) | colorHSV(HUE_START+ CALL+ HUE_RED));
+		setPixelColor(g, getPixelColor(g) | colorHSV(HUE_START+ CALL+ HUE_GREEN));
+		setPixelColor(b, getPixelColor(b) | colorHSV(HUE_START+ CALL+ HUE_BLUE));
 	} else if (IS_MONOMODE) {
 		setPixelColor(r, getPixelColor(r) | MAIN_COLOR);
 		setPixelColor(g, getPixelColor(g) | DIM(MAIN_COLOR));
@@ -1477,7 +1525,8 @@ uint16_t WS2812FX::mode_split(void){
 
 // - = = FLYING S P L I T = = -
 uint16_t WS2812FX::mode_flying_split(void){
-  float phase = CALL * (0.02 + _num_segment*0.001);
+  SETUP HUE_START = random8();
+  float phase = (HUE_START+ CALL) * (0.02 + _num_segment*0.001);
   float magic = (sin(phase*1.0) + sin(phase*2.0) + sin(phase*4.5));
   // uint32_t color = 
   int split = _seg_len/2 + magic*_seg_len/9;

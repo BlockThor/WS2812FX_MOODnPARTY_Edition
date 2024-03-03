@@ -48,12 +48,13 @@
 #define WS2812FX_MNP_EDITION_h
 
 #define WS2812FX_MNP_EDITION_VERSION_VAL(major, minor, patch) ((major << 16) | (minor << 8) | (patch))
-#define WS2812FX_MNP_EDITION_VERSION WS2812FX_MNP_EDITION_VERSION_VAL(0, 1, 2)
+#define WS2812FX_MNP_EDITION_VERSION WS2812FX_MNP_EDITION_VERSION_VAL(0, 1, 3)
 
 /* 
  *    0.1.0 - first release on GitHub
  *    0.1.1 - add mode: Portal (FX_MODE_PORTAL)
  *    0.1.2 - make some mode more adaptive to numLEDs 
+ *    0.1.3 - make some RGB modes with random color startup
  */
 #define FSH(x) (__FlashStringHelper*)(x)
 #define MAX_MILLIS (0UL - 1UL) /* ULONG_MAX */
