@@ -233,7 +233,8 @@ uint16_t WS2812FX::mode_scan(void) {
 
 	if (IS_RGBMODE) {
 	  uint8_t colorIncr =  255.0/ _seg_len;
-	  color = color_wheel(HUE_START+ (CALL/4)&0xFF+ colorIncr* index);
+	  uint8_t hue_slide =  (CALL>>4)&0xFF;
+	  color = color_wheel(HUE_START+ hue_slide+ colorIncr* index);
 	} else if(IS_MONOMODE) {
       color = MAIN_COLOR;
 	} else {
@@ -250,6 +251,7 @@ uint16_t WS2812FX::mode_dual_scan(void) {
   uint32_t color1 = MAIN_COLOR;
   uint32_t color2 = SECOND_COLOR;
   uint8_t size = 1 << SIZE_OPTION;
+	uint8_t hue_slide =  (CALL>>4)&0xFF;
   STEP = CALL % ((_seg_len - size) *2);
   int16_t index = abs((int)(_seg_len- STEP- size));
 
@@ -257,9 +259,9 @@ uint16_t WS2812FX::mode_dual_scan(void) {
   
 	if (IS_RGBMODE) {
 	  uint8_t colorIncr =  255.0 / _seg_len;
-    uint8_t hue = HUE_START+ colorIncr* index/2;// (CALL/4)&0xFF+
-	  color1 = color_wheel((CALL>>4)+hue);
-	  color2 = color_wheel((CALL>>4)+hue+128);
+    uint8_t hue = HUE_START+ hue_slide+ colorIncr* index/2;
+	  color1 = color_wheel(hue);
+	  color2 = color_wheel(hue+ 128);
 	} else if(IS_MONOMODE) {
       color2 = color1;
 	} 
@@ -1635,4 +1637,19 @@ uint16_t WS2812FX::mode_portal(void){
   setPixelColor(LAST, color2);
   
   return _seg->speed / 24;
+}
+
+uint16_t WS2812FX::mode_rocking(void){
+  SETUP HUE_START = random8()+ 128; 
+  uint8_t size = 1 << SIZE_OPTION;
+  uint8_t hue_slide = CALL/32;
+  double rock = sine8(CALL/4)- 128;
+  const uint8_t split = _seg_len/2;
+  
+  for(uint16_t i=FIRST; i <= LAST; i++) { 
+    uint8_t coef = ((double)i/_seg_len*2.0-1.0)* rock* size*2;
+    uint32_t color = color_wheel(HUE_START+ hue_slide+ coef);
+    setPixelColor(i, color);
+  }
+  return _seg->speed / 256;
 }

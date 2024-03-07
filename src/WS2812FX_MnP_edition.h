@@ -6,8 +6,6 @@
   2023-2024
   www.ledvine.com
   
-  0.1.0 - first release on GitHub
-  0.1.1 - add mode: Portal (FX_MODE_PORTAL)
  
   NOTES
     * Uses the Adafruit NeoPixel library. Get it here:
@@ -48,13 +46,15 @@
 #define WS2812FX_MNP_EDITION_h
 
 #define WS2812FX_MNP_EDITION_VERSION_VAL(major, minor, patch) ((major << 16) | (minor << 8) | (patch))
-#define WS2812FX_MNP_EDITION_VERSION WS2812FX_MNP_EDITION_VERSION_VAL(0, 1, 3)
+#define WS2812FX_MNP_EDITION_VERSION WS2812FX_MNP_EDITION_VERSION_VAL(0, 1, 4)
 
 /* 
  *    0.1.0 - first release on GitHub
  *    0.1.1 - add mode: Portal (FX_MODE_PORTAL)
  *    0.1.2 - make some mode more adaptive to numLEDs 
  *    0.1.3 - make some RGB modes with random color startup
+ *    0.1.4 - add mode: Rocking (FX_MODE_ROCKING)
+ 
  */
 #define FSH(x) (__FlashStringHelper*)(x)
 #define MAX_MILLIS (0UL - 1UL) /* ULONG_MAX */
@@ -434,6 +434,7 @@ class WS2812FX : public Adafruit_NeoPixel {
       mode_split(void),
       mode_flying_split(void),
       mode_portal(void),
+      mode_rocking(void),
       mode_custom_0(void),
       mode_custom_1(void),
       mode_custom_2(void),
